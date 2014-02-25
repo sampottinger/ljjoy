@@ -1,0 +1,24 @@
+mappings:
+  - deviceRegister: AIN0
+    joystickOutputChannel: axis:0
+    outputStrategy:
+      name: linear
+      minDeviceVal: 0
+      maxDeviceVal: 11
+      minJoystickVal: 1
+      maxJoystickVal: 32767
+  - deviceRegister: FIO0
+    joystickOutputChannel: button:4
+    outputStrategy:
+      name: binary
+      activateThreshold: 0.5
+      inactiveValue: 0
+      activeValue: 1
+labjack:
+  deviceType: T7
+  connectionType: USB
+  identifier: '470010610'
+  refreshRate: 10
+joystick:
+  name: vJoy Device
+  debug: yes

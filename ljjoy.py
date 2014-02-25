@@ -11,7 +11,7 @@ import time
 
 import yaml
 
-#from fsscript import joystick
+from contrib import joysticks
 from labjack import ljm
 
 DEFAULT_MIN_DEVICE_VAL = 0
@@ -178,20 +178,24 @@ class JoystickDecorator:
 
     def __init__(self, target):
         self.vals = {}
+        self.vjoy = joysticks.get(target['name'])
+        self.debug = target['debug']
 
     def setAxis(self, joystick_output_num, output_value):
         key = 'axis:' + str(joystick_output_num)
         last_val = self.vals.get(key, None)
-        if output_value != last_val:
+        if output_value != last_val and self.debug:
             print "set axis %s to %f" % (joystick_output_num, output_value)
         self.vals[key] = output_value
+        self.vjoy.setAxis(joystick_output_num, output_value)
 
     def setButton(self, joystick_output_num, output_value):
         key = 'button:' + str(joystick_output_num)
         last_val = self.vals.get(key, None)
-        if output_value != last_val:
+        if output_value != last_val and self.debug:
             print "set button %s to %f" % (joystick_output_num, output_value)
         self.vals[key] = output_value
+        self.vjoy.setButton(joystick_output_num, output_value > 0)
 
 
 def try_parse_int(target_value, error_template):
@@ -372,6 +376,7 @@ def main(spec_loc):
     while True:
         start_time = time.time()
         run_mappings(device, mappings, vjoy_device)
+        joysticks.sync()
         elapsed_time = time.time() - start_time
         time_to_sleep = (refresh_rate - elapsed_time) / 1000
         time.sleep(time_to_sleep)
@@ -379,6 +384,6 @@ def main(spec_loc):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print USAGE_STR
+        main('config.yaml')
     else:
         main(sys.argv[1])
