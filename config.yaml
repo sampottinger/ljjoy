@@ -1,0 +1,14 @@
+mappings:
+  - deviceRegister: FIO0
+    joystickOutputChannel: button:4
+    outputStrategy:
+      name: binary
+      activateThreshold: 0.5
+      inactiveValue: 0
+      activeValue: 1
+labjack:
+  deviceType: T7
+  connectionType: USB
+  identifier: ANY
+  refreshRate: 10
+joystick: vJoy Device
