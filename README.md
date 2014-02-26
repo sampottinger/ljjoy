@@ -12,10 +12,10 @@ Author and License
 ------------------
 Patches and extensions welcome! Please see the ["Develop and Extend"](https://github.com/Samnsparky/ljjoy#develop-and-extend-ljjoy) section.  
 
+(c) 2014, [LabJack Corp.](http://labjack.com).  
 Released under the [GNU GPL v3](https://www.gnu.org/copyleft/gpl.html).  
 Lead developer / contact: [Sam Pottinger](http://gleap.org).  
 joysticks.py resused under [BSD license](http://opensource.org/licenses/BSD-3-Clause) from [fscode](https://code.google.com/p/fscode/) by Nils Maier.
-(c) 2014, [LabJack Corp.](http://labjack.com).  
 
 <br>
 Limitations
