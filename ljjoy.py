@@ -145,13 +145,11 @@ class LinearOutputStrategy:
         """
         require_spec_attr(spec, 'minDeviceVal')
         require_spec_attr(spec, 'maxDeviceVal')
-        require_spec_attr(spec, 'minJoystickVal')
-        require_spec_attr(spec, 'maxJoystickVal')
 
         min_device_val = spec['minDeviceVal']
         max_device_vals = spec['maxDeviceVal']
-        min_joystick_val = spec['minJoystickVal']
-        max_joystick_val = spec['maxJoystickVal']
+        min_joystick_val = spec.get('minJoystickVal', 1)
+        max_joystick_val = spec.get('maxJoystickVal', 32767)
 
         joystick_range = max_joystick_val - min_joystick_val
         device_range = max_device_vals - min_device_val
