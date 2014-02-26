@@ -75,7 +75,7 @@ labjack:
 joystick:
   name: vJoy Device
   debug: yes
-```yaml
+```yaml  
 
 <br>
 Configuration
