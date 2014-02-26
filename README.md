@@ -12,9 +12,9 @@ Author and License
 ------------------
 Patches and extensions welcome! Please see the "Develop and Extend" section.  
 
-Released under the [GNU GPL v3](https://www.gnu.org/copyleft/gpl.html).
-Lead developer / contact: [Sam Pottinger](http://gleap.org)
-(c) 2014, [LabJack Corp.](http://labjack.com)
+Released under the [GNU GPL v3](https://www.gnu.org/copyleft/gpl.html).  
+Lead developer / contact: [Sam Pottinger](http://gleap.org).  
+(c) 2014, [LabJack Corp.](http://labjack.com).  
 
 <br>
 Limitations
@@ -52,8 +52,10 @@ Example configuration
 ---------------------
 The following example configuration file
 
- - links the value of digital input FIO0 to joystick button 4
- - reports analog input AIN0 (from 0V to 10V) as joystick x axis position
+ - Opens a LabJack T7 over USB with the serial number 123456789.
+ - Links the value of digital input FIO0 to joystick button 4.
+ - Reports analog input AIN0 (from 0V to 10V) as joystick x axis position.
+ - Reads from the device and updates ever 10 milliseconds.
 
 ```
 mappings:
@@ -70,15 +72,15 @@ mappings:
 labjack:
   deviceType: T7
   connectionType: USB
-  identifier: '470010610'
+  identifier: '123456789'
   refreshRate: 10
 joystick:
   name: vJoy Device
   debug: yes
-```yaml  
+```  
 
 <br>
-Configuration
+API Reference
 -------------
 It's but a [YAML configuration file](http://www.yaml.org/). Check out our examples folder for a super-speedy start. Otherwise, for the whole API...
 
@@ -113,7 +115,7 @@ mappings:
     outputStrategy:
       name: binary
       activateThreshold: 0.5
-```yaml  
+```   
 Mappings indicate which values ljjoy read from the LabJack device and how the virtual joystick should then report those values.
 
  - **deviceRegister** indicates which device value ljjoy should read.
@@ -128,7 +130,7 @@ labjack:
   connectionType: USB
   identifier: '470010610'
   refreshRate: 10
-```yaml  
+```  
 The labjack section indicates which LabJack device ljjoy should use.
 
  - **deviceType** indicates what type of LabJack device ljjoy should open. Currently the only valid option is T7.
@@ -142,7 +144,7 @@ The labjack section indicates which LabJack device ljjoy should use.
 joystick:
   name: vJoy Device
   debug: yes
-```yaml  
+```  
 The joystick section tell ljjoy which joystick to manipulate. 
 
  - **name** indicates the system-level name of the joystick to control (vJoy Device should be used if unsure).
@@ -161,7 +163,7 @@ outputStrategy:
   maxDeviceVal: 5
   minJoystickVal: 0
   maxJoystickVal: 100
-```yaml  
+```  
 Using ```name:linear```, ljjoy will create a linear equation to convert LabJack to joystick values. A device reading of 1 in the above example would output 20 to the virtual joystick.
 
  - **minDeviceVal** tells ljjoy the lowest value to expect from the device.
@@ -180,8 +182,8 @@ outputStrategy:
   activateThreshold: 0.5
   inactiveValue: 0
   activeValue: 1
-```yaml  
-ljjoy will report an "active" value if a device reading meets or exceeds a certain threshold and will output an "inactive" value otherwise. This is frequently used with buttons. A value of 0.1 in the above example would report button off and a value of 0.7 would, for example, report an button being pressed.
+```  
+With ```name: binary```, ljjoy will report an "active" value if a device reading meets or exceeds a certain threshold and will output an "inactive" value otherwise. This is frequently used with buttons. A value of 0.1 in the above example would report button off and a value of 0.7 would, for example, report an button being pressed.
 
  - **activeThreshold** tells ljjoy the minimum device value that should be reported before outputing the activeValue. Optional, defaults to 0.5.
  - **inactiveValue** tells ljjoy what value to report to the virtual joystick when the device value falls under under the activeThreshold. Optional, defaults to 0.
@@ -230,3 +232,37 @@ We lifted our axes list right out of [vjoy](http://vjoystick.sourceforge.net/).
     </tr>
 </tbody>
 </table>
+
+<br>
+Develop and Extend ljjoy
+------------------------
+Patches, feature requests, and bug reports are welcome!
+
+**Running automated tests** 
+Run tests:
+```python test_ljjoy.py```
+
+**Adding scaling strategies**  
+All scaling strategies must implement the following ScalingStrategy interface.
+```
+class ScalingStrategy:
+    """Semi-non-pythonic interface for LabJack to joystick device scaling.
+
+    Somewhat non-pythonic interface for stratgies to scale a LabJack device
+    value to a value to send to the joystick emulator.
+    """
+
+    def process(self):
+        """Scale the LabJack device value to the appropriate joystick value.
+
+        @param device_val: The value read from the device.
+        @type device_val: float
+        @return: The scaled joystick output value.
+        @rtype: float
+        """
+        raise NotImplementedError
+```  
+To then add your strategy to ljjoy, add ```AVAILABLE_OUTPUT_STRATEGIES['name'] = YourScalingStrategy``` at the end of your class definition.
+
+**Everything else**  
+Engage us here on GitHub with the issue tracker. We do ask that patches please unit test when reasonable and follow the [epydoc docstring convention](http://epydoc.sourceforge.net/).
