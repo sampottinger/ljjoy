@@ -10,7 +10,7 @@ Need a data acquisition or automation device to pretend to be a joystick? ljjoy 
 <br>
 Author and License
 ------------------
-Patches and extensions welcome! Please see the "Develop and Extend" section.  
+Patches and extensions welcome! Please see the ["Develop and Extend"](https://github.com/Samnsparky/ljjoy#develop-and-extend-ljjoy) section.  
 
 Released under the [GNU GPL v3](https://www.gnu.org/copyleft/gpl.html).  
 Lead developer / contact: [Sam Pottinger](http://gleap.org).  
@@ -45,7 +45,7 @@ Running ljjoy
 -------------
 ```python ljjoy.py ./examples/one_axis_one_button.yaml```  
 
-Just execute Python on ljjoy and provide 1 command line argument: the path to the YAML configuration file (see configuration section below).
+Just execute Python on ljjoy and provide 1 command line argument: the path to the YAML configuration file (see [example](https://github.com/Samnsparky/ljjoy#example-configuration) and [API section](https://github.com/Samnsparky/ljjoy#api-reference) below).
 
 <br>
 Example configuration
@@ -119,8 +119,8 @@ mappings:
 Mappings indicate which values ljjoy read from the LabJack device and how the virtual joystick should then report those values.
 
  - **deviceRegister** indicates which device value ljjoy should read.
- - **joystickOuputChannel** indicates where ljjoy should use the specified device value in the virutal joystick. Expects ```(axis|button)[\d+]``` or, in other words, "axis" or "button" followed by a colon and then the axis or button number. See the axis map section for more info.
- - **outputStrategy** tells ljjoy how to convert the device reading to joystick output. See the output strategies section for more info.
+ - **joystickOuputChannel** indicates where ljjoy should use the specified device value in the virutal joystick. Expects ```(axis|button)[\d+]``` or, in other words, "axis" or "button" followed by a colon and then the axis or button number. See the [axis map](https://github.com/Samnsparky/ljjoy#axes-index) section for more info.
+ - **outputStrategy** tells ljjoy how to convert the device reading to joystick output. See the [scaling strategies](https://github.com/Samnsparky/ljjoy#scaling-strategies) section for more info.
 
 <br>
 **labjack**
@@ -238,7 +238,7 @@ Develop and Extend ljjoy
 ------------------------
 Patches, feature requests, and bug reports are welcome!
 
-**Running automated tests** 
+**Running automated tests**  
 Run tests:
 ```python test_ljjoy.py```
 
