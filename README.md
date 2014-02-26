@@ -3,8 +3,8 @@ LabJack as a Joystick
 **ljjoy microlibrary: Use a [LabJack](http://labjack.com) anywhere you would use a joystick.**
 
 <br>
-Motivation
-----------
+What is this?
+-------------
 Need a data acquisition or automation device to pretend to be a joystick? ljjoy lets you route any value on your [LabJack T7 measurement and automation device](http://labjack.com/t7) to virtual joystick output. For example, Use analog inputs as joystick axes or digital inputs as joystick buttons. With different scaling mechanisms and easy extendability, this micro-library let's you use a LabJack anywhere you would use a joystick. Games, commercial applications, expensive in-house stuff, hobby? Get ljjoy!
 
 <br>
